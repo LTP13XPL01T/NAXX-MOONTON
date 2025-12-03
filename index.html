@@ -2,409 +2,668 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#000000">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>MLBB VIP CHECKER 2025</title>
-
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700;900&family=Orbitron:wght@900&family=Major+Mono+Display&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Checker Pro - APK v4.0</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        *{margin:0;padding:0;box-sizing:border-box;}
-        body{background:#000;color:#fff;height:100vh;overflow:hidden;font-family:'Roboto',sans-serif;}
+        :root {
+            --valid: #FFEB3B;
+            --failed: #FF4081;
+            --banned: #00BCD4;
+            --running: #4CAF50;
+            --primary: #6200EA;
+            --dark-bg: #121212;
+            --card-bg: #1E1E1E;
+            --surface: #242424;
+            --text: #E0E0E0;
+            --text-secondary: #AAAAAA;
+        }
         
-        /* iPhone 14 Pro Max Frame */
-        .iphone{
-            position:absolute;width:430px;height:932px;left:50%;top:50%;
-            transform:translate(-50%,-50%);background:#000;border-radius:60px;
-            box-shadow:0 0 0 12px #111,0 20px 120px rgba(0,255,255,.5);
-            overflow:hidden;padding:20px 20px 40px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', 'Segoe UI', sans-serif;
         }
-        .notch{
-            position:absolute;top:0;left:50%;transform:translateX(-50%);
-            width:210px;height:37px;background:#000;border-radius:0 0 30px 30px;z-index:100;
+        
+        body {
+            background: var(--dark-bg);
+            color: var(--text);
+            min-height: 100vh;
+            max-width: 100%;
+            overflow-x: hidden;
+            position: relative;
         }
-        .island{
-            position:absolute;top:12px;left:50%;transform:translateX(-50%);
-            width:126px;height:36px;background:#000;border-radius:30px;z-index:101;
-            display:flex;align-items:center;justify-content:center;
-            font:900 13px 'Roboto';color:#fff;transition:.6s cubic-bezier(.16,1,.3,1);
+        
+        /* APK Header Bar */
+        .apk-header {
+            background: linear-gradient(135deg, var(--primary), #3700B3);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
-        .island.active{width:340px;background:linear-gradient(90deg,#00ffff,#ff00ff);color:#000;font-weight:900;}
-        .status-bar{
-            position:absolute;top:14px;width:100%;display:flex;justify-content:space-between;
-            padding:0 32px;font:600 14px 'Roboto';z-index:99;
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
-        #particles-js{position:absolute;width:100%;height:100%;top:0;left:0;z-index:1;}
-
-        .app{position:relative;z-index:10;height:100%;background:rgba(0,0,0,.94);border-radius:40px;display:flex;flex-direction:column;}
-
-        /* BANNER ASCII AESTHETIC BARU — 100% PAS TENGAH */
-        .banner{
-            font-family:'Courier New',monospace;
-            font-size:6.8px;
-            line-height:1.05;
-            text-align:center;
-            letter-spacing:0.5px;
-            color:transparent;
-            background:linear-gradient(90deg,#00ffff,#ff00ff,#39ff14,#ffff00,#ff3300,#00ffff);
-            -webkit-background-clip:text;
-            background-clip:text;
-            text-shadow:0 0 30px rgba(0,255,255,0.8);
-            padding:15px 5px;
-            margin:10px 0 15px;
-            animation:neon 3s linear infinite;
-            white-space:pre;
-            user-select:none;
+        
+        .admin-photo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 3px solid white;
+            object-fit: cover;
         }
-        @keyframes neon{
-            0%,100%{text-shadow:0 0 20px #00ffff,0 0 40px #00ffff;}
-            25%{text-shadow:0 0 20px #ff00ff,0 0 40px #ff00ff;}
-            50%{text-shadow:0 0 20px #39ff14,0 0 40px #39ff14;}
-            75%{text-shadow:0 0 20px #ffff00,0 0 40px #ffff00;}
+        
+        .header-title h1 {
+            font-size: 20px;
+            font-weight: bold;
         }
-
-        .title{
-            text-align:center;font:900 26px 'Orbitron',sans-serif;letter-spacing:6px;
-            background:linear-gradient(90deg,#00ffff,#ff00ff,#00ffff);
-            -webkit-background-clip:text;background-clip:text;
-            -webkit-text-fill-color:transparent;
-            text-shadow:0 0 40px #00ffff;margin-bottom:8px;
+        
+        .header-title p {
+            font-size: 12px;
+            opacity: 0.9;
         }
-        .subtitle{
-            text-align:center;font:700 15px 'Roboto';color:#39ff14;
-            text-shadow:0 0 20px #39ff14;margin-bottom:20px;
+        
+        .header-right {
+            display: flex;
+            gap: 15px;
         }
-
-        .controls{padding:0 20px;display:flex;flex-direction:column;gap:15px;}
-        button,.file-btn{
-            background:linear-gradient(90deg,#00ffff,#ff00ff);color:#000;border:none;
-            padding:18px;border-radius:18px;font:900 16px 'Roboto';text-transform:uppercase;
-            letter-spacing:1.5px;box-shadow:0 10px 30px rgba(0,255,255,.6);transition:.3s;cursor:pointer;
+        
+        .header-icon {
+            font-size: 20px;
+            cursor: pointer;
         }
-        button:disabled{background:#333;color:#666;box-shadow:none;cursor:not-allowed;}
-        button:active{transform:scale(.96);}
-
-        .stats{display:grid;grid-template-columns:1fr 1fr;gap:15px;padding:20px;}
-        .box{background:rgba(255,255,255,.07);padding:18px;border-radius:18px;text-align:center;font:900 15px 'Roboto';backdrop-filter:blur(10px);}
-        .valid{color:#39ff14;text-shadow:0 0 20px #39ff14;}
-        .invalid{color:#ff3300;text-shadow:0 0 20px #ff3300;}
-
-        .log{flex:1;margin:20px;background:rgba(0,0,0,.7);border-radius:20px;padding:15px;
-              font:13px 'Roboto';overflow-y:auto;backdrop-filter:blur(10px);line-height:1.5;}
+        
+        /* Main Container */
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* APK Card Style */
+        .apk-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        /* Warning Banner */
+        .warning-banner {
+            background: linear-gradient(90deg, 
+                #FF0000 0%, #FF5500 20%, #FFFF00 40%, 
+                #00FF00 60%, #00FFFF 80%, #FF00FF 100%);
+            background-size: 400% 100%;
+            animation: banner-slide 8s linear infinite;
+            color: #000;
+            text-align: center;
+            padding: 12px;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        @keyframes banner-slide {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 400% 50%; }
+        }
+        
+        /* File Upload Area */
+        .upload-area {
+            border: 3px dashed var(--banned);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            margin: 20px 0;
+            background: rgba(0, 188, 212, 0.05);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .upload-area:hover {
+            background: rgba(0, 188, 212, 0.1);
+            border-color: var(--valid);
+        }
+        
+        .upload-icon {
+            font-size: 48px;
+            color: var(--banned);
+            margin-bottom: 15px;
+        }
+        
+        /* Control Section */
+        .control-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .control-section {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Thread Control */
+        .thread-control {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .thread-slider {
+            flex: 1;
+            height: 8px;
+            -webkit-appearance: none;
+            background: var(--surface);
+            border-radius: 4px;
+            outline: none;
+        }
+        
+        .thread-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            background: var(--valid);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--valid);
+        }
+        
+        /* Buttons */
+        .apk-btn {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), #3700B3);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(98, 0, 234, 0.4);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, var(--failed), #C2185B);
+            color: white;
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, var(--running), #2E7D32);
+            color: white;
+        }
+        
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stat-card {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            border-left: 4px solid;
+        }
+        
+        .stat-value {
+            font-size: 28px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .stat-valid .stat-value { color: var(--valid); }
+        .stat-failed .stat-value { color: var(--failed); }
+        .stat-banned .stat-value { color: var(--banned); }
+        
+        /* Progress Bar */
+        .progress-container {
+            margin: 20px 0;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: var(--surface);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--running), var(--valid));
+            width: 0%;
+            transition: width 0.5s;
+            position: relative;
+        }
+        
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 255, 255, 0.3) 50%, 
+                transparent 100%);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        /* Results Tabs */
+        .results-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+        
+        .tab-btn {
+            padding: 12px 20px;
+            background: var(--surface);
+            border: none;
+            border-radius: 10px;
+            color: var(--text-secondary);
+            font-weight: bold;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s;
+        }
+        
+        .tab-btn.active {
+            background: rgba(255, 235, 59, 0.2);
+            color: var(--valid);
+            box-shadow: 0 0 15px rgba(255, 235, 59, 0.3);
+        }
+        
+        /* Account List */
+        .account-list {
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .account-item {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 5px solid;
+            transition: all 0.3s;
+        }
+        
+        .account-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .account-valid { border-left-color: var(--valid); }
+        .account-failed { border-left-color: var(--failed); }
+        .account-banned { border-left-color: var(--banned); }
+        
+        .account-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .account-creds {
+            font-family: monospace;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .account-status {
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .status-valid {
+            background: rgba(255, 235, 59, 0.2);
+            color: var(--valid);
+        }
+        
+        .status-failed {
+            background: rgba(255, 64, 129, 0.2);
+            color: var(--failed);
+        }
+        
+        .status-banned {
+            background: rgba(0, 188, 212, 0.2);
+            color: var(--banned);
+        }
+        
+        /* Account Details */
+        .account-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+            font-size: 13px;
+        }
+        
+        .detail-group {
+            background: rgba(255,255,255,0.05);
+            padding: 12px;
+            border-radius: 8px;
+        }
+        
+        .detail-label {
+            color: var(--text-secondary);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+        
+        .detail-value {
+            color: var(--text);
+            font-weight: 500;
+        }
+        
+        /* Save Results Button */
+        .save-results-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--primary), #3700B3);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(98, 0, 234, 0.4);
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+        
+        .save-results-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(98, 0, 234, 0.6);
+        }
+        
+        /* Music Player */
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: var(--card-bg);
+            border-radius: 25px;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
+        }
+        
+        .music-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--surface);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--primary), var(--banned));
+            border-radius: 4px;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .account-item.new {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--text-secondary);
+        }
+        
+        .empty-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-secondary);
+            font-size: 12px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 30px;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .apk-card {
+                padding: 15px;
+            }
+            
+            .account-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .apk-header {
+                padding: 10px 15px;
+            }
+            
+            .header-title h1 {
+                font-size: 16px;
+            }
+        }
     </style>
 </head>
 <body>
-
-<div class="iphone">
-    <div class="notch"></div>
-    <div class="island" id="island">MLBB VIP</div>
-    <div class="status-bar"><div></div><div style="font-weight:900">16:66</div><div>100%</div></div>
-
-    <div id="particles-js"></div>
-
-    <div class="app">
-        <pre class="banner">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣠⣤⣴⣶⣶⣶⣿⣿⣿⣿⣿⣶⣶⣶⣦⣤⣄⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⣀⣤⣤⣤⣤⣤⣤⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣤⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⣼⣿⣿⣿⣿⠿⠿⠿⠿⣿⣿⣶⣦⣄⣀⣠⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⣿⣿⣿⣿⠁⠀⠀⠀⠀⠀⠈⠉⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⢹⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⣠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠿⠻⢿⣿⣿⣿⣿⣦⡀⠀⠀⠀⠀⠀⠀⠀
-⠈⢿⣿⣿⣆⠀⠀⠀⠀⢠⣾⣿⣿⣿⣿⣿⣿⣿⣿⠿⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠋⠀⠀⠀⠀⠘⢿⣿⣿⣿⣷⣄⠀⠀⠀⠀⠀⠀
-⠀⠈⢿⣿⣿⣆⠀⠀⣰⣿⣿⣿⣿⡿⠋⠁⠀⠀⠀⠀⠀⠀⠀⠉⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣦⠀⠀⠀⠀⠀
-⠀⠀⠈⢿⣿⣿⣧⣰⣿⣿⣿⣿⣟⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⢀⣰⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⠀
-⠀⠀⠀⠀⠻⣿⡟⠈⢿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣤⡀⠀⠀⠀⠀⠀⠀⠙⢿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⢀⡴⠛⠁⠀⠀⠻⣿⣿⣿⣇⠀⠀⠀
-⠀⠀⠀⠀⠀⢘⡀⠀⠀⠙⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡄⠀⠀⠀⠀⠀⠀⠙⢿⣿⣿⣿⣿⣿⣿⣷⡄⠀⠀⠀⠀⠀⣠⠴⠋⠀⠀⠀⠀⠀⠀⠀⠸⣿⣿⣿⡄⠀⠀
-⠀⠀⠀⠀⠀⣼⣿⣆⠀⠀⠈⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡆⠀⠀⠀⠀⠀⠀⠀⠈⠉⠛⠻⢿⣿⣿⣿⣶⣤⣠⣴⠞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⣿⣿⣿⣷⠀⠀
-⠀⠀⠀⠀⢀⣿⣿⣿⣷⡀⠀⠀⠈⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠻⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣾⣿⣿⣿⡄⠀
-⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣦⡀⠀⠀⠙⢿⣿⣿⣿⣿⣿⣿⣿⣿⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⣿⣿⣆⠀⠀⠀⠀⠀⠀⢀⣴⡿⠿⣿⣿⣿⣿⡇⠀
-⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣦⡀⠀⠀⠙⢿⣿⣿⣿⣿⣿⣿⣿⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⣿⣿⣷⣄⡀⢀⣠⡶⠋⠀⠀⠀⠙⣿⣿⣿⡇⠀
-⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡀⠀⠀⠙⢿⣿⣿⣿⣿⣿⣿⣷⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣿⣿⣿⣿⡿⠋⠀⠀⠀⠀⠀⠀⠀⠘⣿⣿⡇⠀
-⠀⠀⠀⠀⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡀⠀⠀⠙⢿⣿⣿⣿⣿⣿⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿⣿⣿⣇⠀⠀⠀⠀⠀⠀⢀⣼⣿⣿⠃⠀
-⠀⠀⠀⠀⠀⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡀⠀⠀⠈⠻⣿⣿⣿⣿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣆⠀⠀⠀⠀⢀⣴⣿⣿⣿⡿⠀⠀
-⠀⠀⠀⠀⠀⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡀⠀⠀⠈⠻⠿⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣶⣶⣾⣿⣿⣿⣿⠃⠀⠀
-⠀⠀⠀⠀⠀⠀⠸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠘⢿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⡀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⣿⣿⣿⣿⣿⣿⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠈⢿⣷⡀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢿⣿⣿⣿⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠁⠀⠀⠀⢻⣿⡄⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠻⣿⣿⣿⣿⣿⣿⠟⠁⠀⠀⠀⠀⠀⠀⢿⣿⡀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⣷⣦⣀⠀⠀⠀⠉⠻⣿⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠘⣿⣧
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⡶⠤⢴⣿⣿⣿⣶⣦⣄⣀⠀⠀⠀⠀⠀⣰⣿⣿
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠿⢿⣿⣿⣿⣿⣿⣿⣿⡟</pre>
-
-        <div class="title">MLBB VIP CHECKER</div>
-        <div class="subtitle">2025 • FULL DETAIL • UNCENSORED</div>
-
-        <div class="controls">
-            <label class="file-btn" for="comboFile"><span id="fileLabel">UPLOAD COMBO (MAIL:PASS)</span></label>
-            <input type="file" id="comboFile" accept=".txt" style="display:none">
-
-            <button id="startBtn">START SCANNING</button>
-            <button id="stopBtn" disabled>FORCE STOP</button>
-
-            <div style="display:flex;gap:12px">
-                <button id="saveTxt" disabled>SAVE TXT</button>
-                <button id="saveJson" disabled>SAVE JSON</button>
+    <!-- APK Header -->
+    <div class="apk-header">
+        <div class="header-left">
+            <img src="https://files.catbox.moe/qrcmms.jpg" alt="Admin Photo" class="admin-photo">
+            <div class="header-title">
+                <h1>N4XX MOONTON HD</h1>
+                <p>CREATE BY LUTPI RAMADHAN</p>
             </div>
         </div>
-
-        <div class="stats">
-            <div class="box">TARGET<br><span id="total" style="font-size:28px">0</span></div>
-            <div class="box valid">VALID<br><span id="valid" style="font-size:28px">0</span></div>
-            <div class="box invalid">INVALID<br><span id="invalid" style="font-size:28px">0</span></div>
-            <div class="box">ERROR<br><span id="error" style="font-size:28px">0</span></div>
+        <div class="header-right">
+            <div class="header-icon" title="System Status">
+                <i class="fas fa-signal"></i>
+            </div>
+            <div class="header-icon" title="Settings">
+                <i class="fas fa-cog"></i>
+            </div>
+            <div class="header-icon" title="Help">
+                <i class="fas fa-question-circle"></i>
+            </div>
         </div>
-
-        <div style="padding:0 20px 10px;text-align:center">
-            <strong><span id="status" style="color:#00ffff;font-size:15px">Status: Menunggu combo file...</span></strong>
-        </div>
-
-        <div class="log" id="log"></div>
     </div>
-</div>
-
-<script>
-// Particle Network
-particlesJS("particles-js",{
-    "particles":{
-        "number":{"value":120},
-        "color":{"value":["#00ffff","#ff00ff","#39ff14"]},
-        "shape":{"type":"circle"},
-        "opacity":{"value":0.5,"random":true},
-        "size":{"value":3,"random":true},
-        "line_linked":{"enable":true,"distance":150,"color":"#00ffff","opacity":0.4,"width":1},
-        "move":{"enable":true,"speed":2}
-    },
-    "interactivity":{"events":{"onhover":{"enable":true,"mode":"repulse"}}},
-    "retina_detect":true
-});
-
-// Variabel
-let combo = [], validAccounts = [], scanning = false;
-const island = document.getElementById('island');
-
-// Upload Combo
-document.getElementById('comboFile').addEventListener('change', e => {
-    const file = e.target.files[0];
-    if(!file) return;
-    document.getElementById('fileLabel').textContent = 'Loaded: '+file.name;
-    const reader = new FileReader();
-    reader.onload = () => {
-        combo = reader.result.split('\n')
-            .map(l => l.trim())
-            .filter(l => l && !l.startsWith('#'))
-            .map(l => {
-                for(let sep of [':','|']){
-                    if(l.includes(sep)){
-                        let [mail,pass] = l.split(sep,2);
-                        if(mail.includes('@') && pass) return {mail:mail.toLowerCase(), pass:pass.trim()};
-                    }
-                }
-            }).filter(x=>x);
-        document.getElementById('total').textContent = combo.length;
-        document.getElementById('status').textContent = `Ready — ${combo.length} akun dimuat`;
-    };
-    reader.readAsText(file);
-});
-
-// Fungsi Log
-function log(text, color = '#00ffff'){
-    const div = document.createElement('div');
-    div.innerHTML = text;
-    div.style.color = color;
-    div.style.margin = '4px 0';
-    document.getElementById('log').appendChild(div);
-    div.scrollIntoView({behavior:'smooth'});
-}
-
-// Generate Detail Akun (SUPER LENGKAP)
-function generateDetailAccount(email, password) {
-    const names = ["Bintang","Sakti","Rizky","Dwi","Ahmad","Putri","Mega","Dewi","Surya","Adit"];
-    const last = ["Gaming","Pro","YT","ML","ID","King","Queen","Reborn","Shinobi","X"];
-    const heroes = ["Ling","Fanny","Lancelot","Gusion","Chou","Hayabusa","Karina","Aldous","Selena","Harith"];
-    const tier = ["Mythic","Mythical Glory","Mythical Immortal","Legend"];
-
-    const fn = names[Math.floor(Math.random()*names.length)];
-    const ln = last[Math.floor(Math.random()*last.length)];
-    const totalMatch = Math.floor(Math.random()*4000)+800;
-    const wins = Math.floor(totalMatch * (Math.random()*0.15 + 0.55));
-    const wr = (wins/totalMatch*100).toFixed(2);
-    const skinCount = Math.floor(Math.random()*450)+80;
-    const supreme = Math.floor(skinCount * 0.01);
-    const grand = Math.floor(skinCount * 0.02);
-    const exquisite = Math.floor(skinCount * 0.06);
-    const deluxe = Math.floor(skinCount * 0.15);
-    const exceptional = Math.floor(skinCount * 0.2);
-    const common = skinCount - (supreme+grand+exquisite+deluxe+exceptional);
-
-    const top1 = `${heroes[Math.floor(Math.random()*heroes.length)]} : ${Math.floor(Math.random()*800)+200}|${(Math.random()*20+65).toFixed(1)}%|${Math.floor(Math.random()*8000)+3000}`;
-    const top2 = `${heroes[Math.floor(Math.random()*heroes.length)]} : ${Math.floor(Math.random()*600)+100}|${(Math.random()*15+60).toFixed(1)}%|${Math.floor(Math.random()*7000)+2500}`;
-    const top3 = `${heroes[Math.floor(Math.random()*heroes.length)]} : ${Math.floor(Math.random()*400)+80}|${(Math.random()*10+58).toFixed(1)}%|${Math.floor(Math.random()*6000)+2000}`;
-
-    function randomDate(start, end) {
-        return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime())).toLocaleDateString('id-ID');
-    }
-
-    return {
-        login: `${email}:${password}`,
-        account_id: `ML${Math.floor(Math.random()*900000000)+100000000}`,
-        first_name: fn,
-        last_name: ln,
-        tanggal_lahir: randomDate(new Date(1995,0,1), new Date(2005,0,1)),
-        level: Math.floor(Math.random()*120)+50,
-        current_tier: tier[Math.floor(Math.random()*tier.length)],
-        max_tier: tier[Math.floor(Math.random()*tier.length)],
-        hero_count: Math.floor(Math.random()*118)+20,
-        skin_count: skinCount,
-        supreme_skins: supreme,
-        grand_skins: grand,
-        exquisite_skins: exquisite,
-        deluxe_skins: deluxe,
-        exceptional_skins: exceptional,
-        common_skins: common,
-        win_rate: wr + "%",
-        collector_level: Math.floor(Math.random()*10)+1,
-        collector_title: ["Collector I","Collector II","Master Collector","Legendary Collector"][Math.floor(Math.random()*4)],
-        achievement_points: Math.floor(Math.random()*8000)+2000,
-        credits_score: Math.floor(Math.random()*300 + 700).toFixed(0),
-        last_login: randomDate(new Date(Date.now() - 86400000*30), new Date()),
-        v2l_status: Math.random() > 0.5 ? "Verified" : "Not Verified",
-        detailed_bind_info: Math.floor(Math.random()*4)+1 + " Akun Terhubung",
-        banned_status: Math.random() < 0.06 ? "Yes" : "No",
-        ban_end_date: Math.random() < 0.06 ? randomDate(new Date(), new Date(Date.now() + 86400000*30)) : "Never",
-        devices_connected: Math.floor(Math.random()*4)+1,
-        bind_accounts: ["Moonton","Facebook","Google Play","TikTok"].sort(()=>0.5-Math.random()).slice(0,Math.floor(Math.random()*3)+1).join(", "),
-        total_match_played: totalMatch,
-        total_wins: wins,
-        total_mvp: Math.floor(wins * 0.35),
-        mvp_loss: Math.floor((totalMatch-wins) * 0.1),
-        double_kill: Math.floor(Math.random()*300)+50,
-        triple_kill: Math.floor(Math.random()*150)+20,
-        maniac: Math.floor(Math.random()*50)+5,
-        savage: Math.floor(Math.random()*20)+1,
-        legendary: Math.floor(Math.random()*10),
-        kda: (Math.random()*2 + 3.5).toFixed(2),
-        team_participation: (Math.random()*20 + 60).toFixed(1) + "%",
-        min_gold: Math.floor(Math.random()*5000)+8000,
-        min_hero_damage: Math.floor(Math.random()*20000)+30000,
-        most_kills: Math.floor(Math.random()*15)+10,
-        most_assists: Math.floor(Math.random()*20)+15,
-        longest_win_streak: Math.floor(Math.random()*30)+15,
-        highest_damage: Math.floor(Math.random()*50000)+80000,
-        highest_damage_taken: Math.floor(Math.random()*40000)+60000,
-        highest_gold: Math.floor(Math.random()*8000)+15000,
-        top_hero_1: top1,
-        top_hero_2: top2,
-        top_hero_3: top3,
-        last_match_date: randomDate(new Date(Date.now() - 86400000*7), new Date()),
-        last_match_duration: Math.floor(Math.random()*15)+20 + " menit",
-        last_hero_purchase: heroes[Math.floor(Math.random()*heroes.length)],
-        last_match_hero_name: heroes[Math.floor(Math.random()*heroes.length)],
-        last_match_kills: Math.floor(Math.random()*12)+3,
-        last_match_deaths: Math.floor(Math.random()*8),
-        last_match_assists: Math.floor(Math.random()*15)+5,
-        last_match_gold: Math.floor(Math.random()*8000)+12000,
-        last_match_hero_damage: Math.floor(Math.random()*30000)+40000,
-        last_match_damage_taken: Math.floor(Math.random()*25000)+30000,
-        prev_heroes: heroes.sort(()=>0.5-Math.random()).slice(0,5).join(", ")
-    };
-}
-
-// Start Scanning
-document.getElementById('startBtn').onclick = async () => {
-    if(scanning || combo.length===0) return;
-    scanning = true;
-    island.classList.add('active');
-    island.textContent = 'SCANNING...';
-    document.getElementById('startBtn').disabled = true;
-    document.getElementById('stopBtn').disabled = false;
-    document.getElementById('log').innerHTML = '';
-    validAccounts = [];
-    document.getElementById('valid').textContent = '0';
-    document.getElementById('invalid').textContent = '0';
-    document.getElementById('error').textContent = '0';
-
-    for(let i = 0; i < combo.length; i++){
-        if(!scanning) break;
-        await new Promise(r => setTimeout(r, Math.random()*600 + 300));
-
-        if(Math.random() < 0.69){
-            const data = generateDetailAccount(combo[i].mail, combo[i].pass);
-            validAccounts.push(data);
-            log(`<span style="color:#39ff14">[VALID]</span> ${data.login}<br>ID: ${data.account_id} | ${data.current_tier} | ${data.skin_count} skins (${data.supreme_skins} Supreme)`,'#39ff14');
-            document.getElementById('valid').textContent = validAccounts.length;
-        }else{
-            log(`<span style="color:#ff3300">[INVALID]</span> ${combo[i].mail}`,'#ff3300');
-            document.getElementById('invalid').textContent = parseInt(document.getElementById('invalid').textContent)+1;
-        }
-        document.getElementById('status').textContent = `Scanning ${i+1}/${combo.length} • ${((i+1)/combo.length*100).toFixed(1)}%`;
-    }
-
-    scanning = false;
-    island.classList.remove('active');
-    island.textContent = validAccounts.length + ' VALID';
-    document.getElementById('startBtn').disabled = false;
-    document.getElementById('stopBtn').disabled = true;
-    if(validAccounts.length > 0){
-        document.getElementById('saveTxt').disabled = false;
-        document.getElementById('saveJson').disabled = false;
-    }
-    log('[SELESAI] Scanning selesai!','#39ff14');
-};
-
-// Stop
-document.getElementById('stopBtn').onclick = () => {
-    scanning = false;
-    island.classList.remove('active');
-    island.textContent = 'STOPPED';
-    log('[STOP] Scan dihentikan manual','#ff3300');
-};
-
-// Save TXT & JSON (FORMAT PERSIS SEPERTI PERMINTAANMU)
-function saveFile(type){
-    if(validAccounts.length===0) return log('Tidak ada akun valid','#ff3300');
-    const date = new Date().toISOString().slice(0,16).replace(/[:T]/g,'-');
-    let content = '';
-
-    if(type==='TXT'){
-        validAccounts.forEach(a => {
-            content += `${a.login}\n`;
-            content += `ID : ${a.account_id}\n`;
-            content += `Name : ${a.first_name} ${a.last_name}\n`;
-            content += `Tanggal Lahir : ${a.tanggal_lahir}\n`;
-            content += `Level : ${a.level}\n`;
-            content += `Current Tier : ${a.current_tier}\n`;
-            content += `Max Tier : ${a.max_tier}\n`;
-            content += `Hero Count : ${a.hero_count}\n`;
-            content += `Skin Count : ${a.skin_count}\n`;
-            content += `    Supreme Skins : ${a.supreme_skins}\n`;
-            content += `    Grand Skins : ${a.grand_skins}\n`;
-            content += `    Exquisite Skins : ${a.exquisite_skins}\n`;
-            content += `    Deluxe Skins : ${a.deluxe_skins}\n`;
-            content += `    Exceptional Skins : ${a.exceptional_skins}\n`;
-            content += `    Common Skins : ${a.common_skins}\n`;
-            content += `Win Rate : ${a.win_rate}\n`;
-            content += `Collector Level : ${a.collector_level}\n`;
-            content += `Collector Title : ${a.collector_title}\n`;
-            content += `Achievement Points : ${a.achievement_points}\n`;
-            content += `Credits Score : ${a.credits_score}\n`;
-            content += `Last Login : ${a.last_login}\n`;
-            content += `V2L Status : ${a.v2l_status}\n`;
-            content += `Detailed Bind Info : ${a.detailed_bind_info}\n`;
-            content += `Banned : ${a.banned_status}\n`;
-            content += `Ban End Date : ${a.ban_end_date}\n`;
-            content += `Devices Connected : ${a.devices_connected}\n`;
-            content += `Bind Accounts : ${a.bind_accounts}\n`;
-            content += `Total Match Played : ${a.total_match_played}\n`;
-            content += `Total Wins : ${a.total_wins}\n`;
-            content += `Total MVP : ${a.total_mvp}\n`;
-            content += `MVP Loss : ${a.mvp_loss}\n`;
-            content += `Double Kill : ${a.double_kill}\n`;
-            content += `Triple Kill : ${a.triple_kill}\n`;
-                        </div>
+    
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Warning Banner -->
+        <div class="warning-banner">
+            <i class="fas fa-shield-alt"></i> MOBILE LEGENDS CHECKER VVIP ONLINE
+            <i class="fas fa-bolt"></i> MULTI THREADS - FULL INFORMATION
+        </div>
+        
+        <!-- File Upload Card -->
+        <div class="apk-card">
+            <h2 style="margin-bottom: 15px; color: var(--valid);">
+                <i class="fas fa-file-upload"></i> UPLOAD COMBO FILE
+            </h2>
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <h3>Click to Upload or Drag & Drop</h3>
+                <p style="color: var(--text-secondary); font-size: 14px; margin-top: 10px;">
+                    Upload .txt file containing accounts (email:password format)
+                </p>
+                <input type="file" id="fileInput" accept=".txt" style="display: none;">
+            </div>
+            
+            <div style="text-align: center; margin: 20px 0;">
+                <span style="color: var(--text-secondary);">OR</span>
+            </div>
+            
+            <h3 style="margin-bottom: 10px;">
+                <i class="fas fa-keyboard"></i> MANUAL INPUT
+            </h3>
+            <textarea id="manualInput" style="
+                width: 100%;
+                height: 120px;
+                background: var(--surface);
+                border: 2px solid rgba(255,255,255,0.1);
+                border-radius: 12px;
+                padding: 15px;
+                color: var(--text);
+                font-family: monospace;
+                margin-bottom: 15px;
+                resize: vertical;
+            " placeholder="email:password&#10;username:password123&#10;One account per line..."></textarea>
+            
+            <button class="apk-btn btn-primary" id="clearBtn">
+                <i class="fas fa-trash"></i> CLEAR ALL INPUT
+            </button>
+        </div>
+        
+        <!-- Control Panel -->
+        <div class="apk-card">
+            <h2 style="margin-bottom: 20px; color: var(--banned);">
+                <i class="fas fa-sliders-h"></i> CHECKER SETTINGS
+            </h2>
+            
+            <div class="thread-control">
+                <span style="font-weight: bold;">Threads:</span>
+                <input type="range" class="thread-slider" id="threadSlider" min="1" max="100" value="10">
+                <span id="threadValue" style="min-width: 60px; font-weight: bold; color: var(--valid);">10</span>
+            </div>
+            
+            <div class="control-section">
+                <button class="apk-btn btn-success" id="startBtn">
+                    <i class="fas fa-play"></i> START CHECK
+                </button>
+                <button class="apk-btn btn-danger" id="stopBtn" disabled>
+                    <i class="fas fa-stop"></i> STOP
+                </button>
+            </div>
+        </div>
+        
+        <!-- Statistics -->
+        <div class="apk-card">
+            <h2 style="margin-bottom: 20px; color: var(--primary);">
+                <i class="fas fa-chart-bar"></i> CHECKING STATISTICS
+            </h2>
+            
+            <div class="stats-grid">
+                <div class="stat-card stat-valid">
+                    <div class="stat-label">VALID</div>
+                    <div class="stat-value" id="validCount">0</div>
+                    <div class="stat-desc">Accounts</div>
+                </div>
+                <div class="stat-card stat-failed">
+                    <div class="stat-label">FAILED</div>
+                    <div class="stat-value" id="failedCount">0</div>
+                    <div class="stat-desc">Accounts</div>
+                </div>
+                <div class="stat-card stat-banned">
+                    <div class="stat-label">BANNED</div>
+                    <div class="stat-value" id="bannedCount">0</div>
+                    <div class="stat-desc">Accounts</div>
+                </div>
+                <div class="stat-card" style="border-left-color: var(--primary);">
+                    <div class="stat-label">TOTAL</div>
+                    <div class="stat-value" id="totalCount" style="color: var(--primary);">0</div>
+                    <div class="stat-desc">Accounts</div>
+                </div>
+            </div>
+            
+            <div class="progress-container">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                    <span>Progress</span>
+                    <span id="progressText">0% (0/0)</span>
+                </div>
+                <div class="progress-bar                </div>
                 
                 <div class="control-panel">
                     <button class="btn btn-success" onclick="startChecking()">🚀 Start Auto Checker</button>
